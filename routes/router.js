@@ -1,11 +1,36 @@
 const routes = require('express').Router();
 const controller = require('../controllers/moviesController')
+const controllerAuth = require('../controllers/authController')
 
-routes.get('/', (req,res) =>{
-  res.send('test')
-})
+const cekLogin = function (req, res, next){
+  if(req.session.user){
+    res.redirect(`/login?err=Ada yang LOGIN`)
+  } else {
+    next()
+  }
+}
+
+
+routes.get('/', controller.findAll)
+
 
 routes.get('/movies', controller.findAll)
+routes.get('/register', (req,res) =>{
+  res.render('register', {err:req.query.err})
+})
+
+routes.post('/register', controllerAuth.register)
+routes.get('/login', (req, res) =>{
+  res.render ('login', {err:req.query.err})
+})
+routes.post('/login', cekLogin, controllerAuth.login)
+
+routes.get('/logout', (req, res) =>{
+  req.session.destroy(function (err){
+    console.log('ceklogout')
+    res.redirect('/movies')
+  })
+})
 
 
 module.exports = routes

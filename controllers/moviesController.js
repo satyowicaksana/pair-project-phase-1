@@ -7,8 +7,8 @@ class MovieController {
         // Will escape title and validate DESC against a list of valid direction parameters
         ['id', 'ASC']]})
         .then(dataMovies =>{
-          res.send (dataMovies)
-          res.render("movies",{dataMovies,err:req.query.err})
+          // res.send (dataMovies)
+          res.render("movies",{dataMovies, err:req.query.err})
         })
         .catch(err =>{
           res.redirect(`/movies?err=${err.message}`)

@@ -3,7 +3,12 @@
 const imdb = require('imdb-api')
 const key = '829ccbd7'
 
-const keyId = ['tt0068646', 'tt0071562', 'tt0099674', 'tt0150742', 'tt0809488' ]
+const keyId = ['tt0462499','tt0089880','tt0095956','tt1905041','tt0232500','tt1013752','tt0322259','tt0463985','tt6806448','tt3183660','tt4123430','tt1201607','tt0241527','tt0295297','tt0304141','tt0330373','tt0373889','tt0926084','tt0417741','tt2375379','tt1485763','tt5251328','tt0814243','tt0832449','tt1010435','tt1006926','tt1018764','tt1037116','tt0997084']
+
+// ,,,,,'tt4633694','tt6320628','tt1872181'
+// const keydelay = 
+
+
 
 let promises = []
   keyId.forEach(element => {
@@ -14,7 +19,6 @@ let promises = []
     apiKey: key
   }))
 });
-
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -47,15 +51,8 @@ module.exports = {
         //  console.log(arr)
         return  queryInterface.bulkInsert('Movies', arr)   
       })
+      .catch(console.log)
   
-  // return Promise.all(promises)
-  // .then (movies =>{
-  //   movies.forEach(movie => {
-  //     movie.createdAt = new Date()
-  //     movie.updatedAt = new Date()
-  //   })
-  //   //  queryInterface.bulkInsert('Movies', movies)   
-  // })
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
