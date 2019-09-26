@@ -1,7 +1,29 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
-  class Movie extends Model {}
+  class Movie extends Model {
+    getAverageRating() {
+      return sequelize.models.Review
+      .findAll({
+        where: {
+          MovieId: this.id
+        }
+      })
+      .then(reviews => {
+        let totalRating = 0
+        let totalReview = 0
+        reviews.forEach(review => {
+          totalRating += review.dataValues.rating
+          totalReview++
+        })
+        if(!totalReview) {
+          return 0
+        } else {
+          return totalRating / totalReview
+        }
+      })
+    }
+  }
   Movie.init({
     title: DataTypes.STRING,
     year: DataTypes.INTEGER,

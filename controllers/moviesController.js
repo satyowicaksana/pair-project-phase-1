@@ -2,6 +2,7 @@ const Model = require('../models')
 const Movie = Model.Movie
 const Review = Model.Review
 const User = Model.User
+const getFormattedDate = require('../helpers/getFormattedDate')
 
 
 class MovieController {
@@ -19,20 +20,35 @@ class MovieController {
     }
 
   static findOneWithReviews (req, res) {
+    let movie
     Movie
     .findByPk(req.params.id, {include: [
       {
         model: Review,
-        include: [User],
-        required: true
+        include: [User]
       }
     ]})
-    .then(movie => {
-      // res.send(movie)
-      res.render('movies-show-reviews', {movie, err:req.query.err})
+    .then(foundMovie => {
+      movie = foundMovie
+      return movie.getAverageRating()
+    })
+    .then(averageRating => {
+      console.log('ini dia', averageRating)
+      movie.setDataValue('averageRating', averageRating)
+      return Review
+      .findOne({
+        where: {
+          MovieId: movie.id,
+          UserId: 1
+        }
+      })
+    })
+    .then(loggedUserReview => {
+      res.render('movies-show-reviews', {movie, err:req.query.err, getFormattedDate, loggedUserReview})
     })
     .catch(err => {
-      res.redirect(`/movies/${req.params.id}?err=${err.message}`)
+      res.send(err.message)
+      // res.redirect(`/movies/${req.params.id}?err=${err.message}`)
     })
   }
 
@@ -61,6 +77,29 @@ class MovieController {
     })
     .catch(err => {
       res.redirect(`/movies/${req.params.id}/add-review/?err=${err.message}`)
+    })
+  }
+
+  static editReview (req, res) {
+    let movie
+    Movie
+    .findByPk(req.params.id)
+    .then(foundMovie => {
+      movie = foundMovie
+      return Review
+      .findOne({
+        where: {
+          MovieId: movie.id,
+          UserId: 1
+        }
+      })
+    })
+    .then(review => {
+      console.log(review)
+      res.render('movies-edit-review', {movie, review, err:req.query.err})
+    })
+    .catch(err => {
+      res.send(err.message)
     })
   }
 }

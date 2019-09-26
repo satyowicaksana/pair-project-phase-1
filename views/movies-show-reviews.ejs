@@ -6,50 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link href="/public/stylesheets/style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Hello, world!</title>
   </head>
   <body>
     <%- include('./partials/navbar.js')%>
-
-    <div class="container">
-    <div class="row">
-        <div class="col">
-            <a href='/movies/<%= movie.id %>'><%= movie.title %></a><br>
-            <img src="<%= movie.poster %>">
-        </div>
-        <div class="col">
-            <%= movie.dataValues.year %><br>
-            <%= movie.dataValues.rated %><br>
-            <%= movie.dataValues.released %><br>
-            <%= movie.dataValues.runtime %><br>
-            <%= movie.dataValues.genre %><br>
-            <%= movie.dataValues.director %><br>
-            <%= movie.dataValues.writer %><br>
-            <%= movie.dataValues.actor %><br>
-            <%= movie.dataValues.plot %><br>
-            <%= movie.dataValues.languages %><br>
-            <%= movie.dataValues.country %><br>
-            <%= movie.dataValues.awards %><br>
-        </div>
-    </div>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/movies/<%= movie.dataValues.id %>/add-review'">Review This Movie</button>
+    <br>
+    <%- include('./partials/movie-info.ejs')%>
+    <br>
+    <% if(!loggedUserReview) { %>
+      <div style="text-align: center; margin-bottom: 10px;">
+          <button style="margin: auto;" type="button" class="btn btn-primary" onclick="window.location.href='/movies/<%= movie.dataValues.id %>/add-review'">Review This Movie</button>
+      </div>
+      <% } %>
+    <% if(loggedUserReview) { %>
+    <div class="card">
+    <h5 class="card-header"><%= loggedUserReview.dataValues.rating %>/5
+      <% for(let i = 0; i < loggedUserReview.dataValues.rating; i++) { %>
+      <img src="http://icons.iconarchive.com/icons/google/noto-emoji-food-drink/256/32360-potato-icon.png" style="width: 25px;">
+      <% } %>
+    </h5>
+    <div class="card-body">
+        <h5 class="card-title">
+            <%= loggedUserReview.dataValues.reviewTitle %><br>
+            Your Review - <%= getFormattedDate(loggedUserReview.dataValues.updatedAt) %>
+        </h5>
+        <p class="card-text"><%= loggedUserReview.dataValues.description %></p>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/movies/<%= movie.dataValues.id %>/edit-review'">Edit</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='/reviews/<%= loggedUserReview.dataValues.id %>/delete'">Delete</button>
     </div>
     <% movie.dataValues.Reviews.forEach(review => { %>
+    <% if(review.dataValues.id !== loggedUserReview.dataValues.id) { %>
     <div class="card">
-    <h5 class="card-header"><%= review.dataValues.rating %></h5>
+    <h5 class="card-header"><%= review.dataValues.rating %>/5
+      <% for(let i = 0; i < review.dataValues.rating; i++) { %>
+        <img src="http://icons.iconarchive.com/icons/google/noto-emoji-food-drink/256/32360-potato-icon.png" style="width: 25px;">
+      <% } %></h5>
     <div class="card-body">
         <h5 class="card-title">
             <%= review.dataValues.reviewTitle %><br>
-            <%= review.dataValues.User.username%>
+            <%= review.dataValues.User.username%> - <%= getFormattedDate(review.dataValues.updatedAt) %>
         </h5>
         <p class="card-text"><%= review.dataValues.description %></p>
-        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
     </div>
     </div>
+    <% } %>
     <% }) %>
+    <% } else { %>
+        <% movie.dataValues.Reviews.forEach(review => { %>
+            <div class="card">
+            <h5 class="card-header"><%= review.dataValues.rating %>/5
+              <% for(let i = 0; i < review.dataValues.rating; i++) { %>
+                <img src="http://icons.iconarchive.com/icons/google/noto-emoji-food-drink/256/32360-potato-icon.png" style="width: 25px;">
+                <% } %></h5>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <%= review.dataValues.reviewTitle %><br>
+                    <%= review.dataValues.User.username%> - <%= getFormattedDate(review.dataValues.updatedAt) %>
+                </h5>
+                <p class="card-text"><%= review.dataValues.description %></p>
+            </div>
+            </div>
+            <% }) %>
+    <% } %>
 
+    <%- include('../views/partials/style.ejs')%>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
