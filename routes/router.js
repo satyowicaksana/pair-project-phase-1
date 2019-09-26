@@ -4,8 +4,8 @@ const controllerAuth = require('../controllers/authController')
 const ReviewController = require('../controllers/ReviewController')
 
 const cekLogin = function (req, res, next){
-  if(req.session.user){
-    res.redirect(`/login?err=Ada yang LOGIN`)
+  if(!req.session.user){
+    res.redirect(`/login`)
   } else {
     next()
   }
@@ -24,7 +24,7 @@ routes.post('/register', controllerAuth.register)
 routes.get('/login', (req, res) =>{
   res.render ('login', {err:req.query.err})
 })
-routes.post('/login', cekLogin, controllerAuth.login)
+routes.post('/login', controllerAuth.login)
 
 routes.get('/logout', (req, res) =>{
   req.session.destroy(function (err){
@@ -33,14 +33,14 @@ routes.get('/logout', (req, res) =>{
   })
 })
 
-routes.get('/movies/:id', controller.findOneWithReviews)
+routes.get('/movies/:id', cekLogin, controller.findOneWithReviews)
 
-routes.get('/movies/:id/add-review', controller.addReview)
-routes.post('/movies/:id/add-review', controller.addReviewPost)
+routes.get('/movies/:id/add-review', cekLogin, controller.addReview)
+routes.post('/movies/:id/add-review', cekLogin, controller.addReviewPost)
 
-routes.get('/movies/:id/edit-review', controller.editReview)
+routes.get('/movies/:id/edit-review', cekLogin, controller.editReview)
 
-routes.post('/reviews/:id/edit', ReviewController.editPost)
-routes.get('/reviews/:id/delete', ReviewController.delete)
+routes.post('/reviews/:id/edit', cekLogin, ReviewController.editPost)
+routes.get('/reviews/:id/delete', cekLogin, ReviewController.delete)
 
 module.exports = routes
