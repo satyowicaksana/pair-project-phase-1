@@ -7,5 +7,10 @@ routes.get('/', (req,res) =>{
 
 routes.get('/movies', controller.findAll)
 
+routes.get('/movies/:id', controller.findOneWithReviews)
+
+routes.get('/movies/:id/add-review', controller.addReview)
+routes.post('/movies/:id/add-review', controller.addReviewPost)
+
 
 module.exports = routes
