@@ -12,7 +12,8 @@ class MovieController {
         ['id', 'ASC']]})
         .then(dataMovies =>{
           // res.send (dataMovies)
-          res.render("movies",{dataMovies, err:req.query.err})
+          let user = req.session.user
+          res.render("movies",{dataMovies,user, err:req.query.err})
         })
         .catch(err =>{
           res.redirect(`/movies?err=${err.message}`)

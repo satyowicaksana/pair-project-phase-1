@@ -4,8 +4,8 @@ const controllerAuth = require('../controllers/authController')
 const ReviewController = require('../controllers/ReviewController')
 
 const cekLogin = function (req, res, next){
-  if(req.session.user){
-    res.redirect(`/login?err=Ada yang LOGIN`)
+  if(!req.session.user){
+    res.redirect(`/login`)
   } else {
     next()
   }
@@ -24,7 +24,7 @@ routes.post('/register', controllerAuth.register)
 routes.get('/login', (req, res) =>{
   res.render ('login', {err:req.query.err})
 })
-routes.post('/login', cekLogin, controllerAuth.login)
+routes.post('/login', controllerAuth.login)
 
 routes.get('/logout', (req, res) =>{
   req.session.destroy(function (err){

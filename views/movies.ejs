@@ -14,16 +14,21 @@
 <body>
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
           <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-item nav-link" href="/register">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link" href="/logout">Logout</a>
-            </li>
-            
+              <li class="nav-item active">
+                  <a class="nav-item nav-link" href="/register">Register</a>
+              </li>
+                <% if (user) { %>
+                <li class="nav-item">
+                    <a class="nav-item nav-link disabled" href="/login" >Login</a>
+                </li>
+                <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="/login">Login</a>
+                </li>
+                <% } %>
+              <li class="nav-item">
+                  <a class="nav-item nav-link" href="/logout">Logout</a>
+              </li>
           </ul>
         </nav>
 
@@ -32,99 +37,95 @@
     </div>
     <div class="container">
         <p>Review Your Favourite Film</p> 
-      </div>
-  <div class="container"> 
-    
-    <div class="bs-example">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Carousel indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <!-- Wrapper for carousel items -->
- 
-        <div class="carousel-inner">
+    </div>
 
-          <div class="carousel-item active">
-            <a href="/movies/<%= dataMovies[78].id%>">
-              <img src="<%= dataMovies[78].poster %>" alt="First Slide" width="180" height="250">
-            </a>
-            <a href="/movies/<%= dataMovies[101].id%>">
-              <img src="<%= dataMovies[101].poster %>" alt="First Slide" width="180" height="250">
-            </a>
-            <a href="/movies/<%= dataMovies[69].id%>">
-              <img src="<%= dataMovies[69].poster %>" alt="First Slide" width="180" height="250">
-            </a>
-            <a href="/movies/<%= dataMovies[20].id%>">
-              <img src="<%= dataMovies[20].poster %>" alt="First Slide" width="180" height="250">
-            </a>
-            <a href="/movies/<%= dataMovies[24].id%>">
-              <img src="<%= dataMovies[24].poster %>" alt="First Slide" width="180" height="250">
-            </a>
-            <a href="/movies/<%= dataMovies[67].id%>">
-              <img src="<%= dataMovies[67].poster %>" alt="First Slide" width="180" height="250">
-            </a>
+    <div class="container"> 
+      
+      <div class="bs-example">
+          <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Carousel indicators -->
+          <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+              <li data-target="#myCarousel" data-slide-to="2"></li>
+          </ol>
+          <!-- Wrapper for carousel items -->
+  
+          <div class="carousel-inner">
+
+            <div class="carousel-item active">
+              <a href="/movies/<%= dataMovies[78].id%>">
+                <img src="<%= dataMovies[78].poster %>" alt="First Slide" width="180" height="250">
+              </a>
+              <a href="/movies/<%= dataMovies[101].id%>">
+                <img src="<%= dataMovies[101].poster %>" alt="First Slide" width="180" height="250">
+              </a>
+              <a href="/movies/<%= dataMovies[69].id%>">
+                <img src="<%= dataMovies[69].poster %>" alt="First Slide" width="180" height="250">
+              </a>
+              <a href="/movies/<%= dataMovies[20].id%>">
+                <img src="<%= dataMovies[20].poster %>" alt="First Slide" width="180" height="250">
+              </a>
+              <a href="/movies/<%= dataMovies[24].id%>">
+                <img src="<%= dataMovies[24].poster %>" alt="First Slide" width="180" height="250">
+              </a>
+              <a href="/movies/<%= dataMovies[67].id%>">
+                <img src="<%= dataMovies[67].poster %>" alt="First Slide" width="180" height="250">
+              </a>
+            </div>
+
+              <div class="carousel-item">
+                  <a href="/movies/<%= dataMovies[23].id%>">
+                    <img src="<%= dataMovies[23].poster %>" alt="Second Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[10].id%>">
+                    <img src="<%= dataMovies[10].poster %>" alt="Second Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[40].id%>">
+                    <img src="<%= dataMovies[40].poster %>" alt="Second Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[50].id%>">
+                    <img src="<%= dataMovies[50].poster %>" alt="Second Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[102].id%>">
+                    <img src="<%= dataMovies[102].poster %>" alt="Second Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[99].id%>">
+                    <img src="<%= dataMovies[99].poster %>" alt="Second Slide" width="180" height="250">
+                  </a>
+              </div>
+
+              <div class="carousel-item">
+                    <a href="/movies/<%= dataMovies[6].id%>">
+                    <img src="<%= dataMovies[6].poster %>" alt="Third Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[84].id%>">
+                    <img src="<%= dataMovies[84].poster %>" alt="Third Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[87].id%>">
+                    <img src="<%= dataMovies[87].poster %>" alt="Third Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[45].id%>">
+                    <img src="<%= dataMovies[45].poster %>" alt="Third Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[46].id%>">
+                    <img src="<%= dataMovies[46].poster %>" alt="Third Slide" width="180" height="250">
+                  </a>
+                  <a href="/movies/<%= dataMovies[59].id%>">
+                    <img src="<%= dataMovies[59].poster %>" alt="Third Slide" width="180" height="250">
+                  </a>
+              </div>
           </div>
-
-            <div class="carousel-item">
-                <a href="/movies/<%= dataMovies[23].id%>">
-                  <img src="<%= dataMovies[23].poster %>" alt="Second Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[10].id%>">
-                  <img src="<%= dataMovies[10].poster %>" alt="Second Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[40].id%>">
-                  <img src="<%= dataMovies[40].poster %>" alt="Second Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[50].id%>">
-                  <img src="<%= dataMovies[50].poster %>" alt="Second Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[102].id%>">
-                  <img src="<%= dataMovies[102].poster %>" alt="Second Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[99].id%>">
-                  <img src="<%= dataMovies[99].poster %>" alt="Second Slide" width="180" height="250">
-                </a>
-            </div>
-
-            <div class="carousel-item">
-                   <a href="/movies/<%= dataMovies[6].id%>">
-                  <img src="<%= dataMovies[6].poster %>" alt="Third Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[84].id%>">
-                  <img src="<%= dataMovies[84].poster %>" alt="Third Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[87].id%>">
-                  <img src="<%= dataMovies[87].poster %>" alt="Third Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[45].id%>">
-                  <img src="<%= dataMovies[45].poster %>" alt="Third Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[46].id%>">
-                  <img src="<%= dataMovies[46].poster %>" alt="Third Slide" width="180" height="250">
-                </a>
-                <a href="/movies/<%= dataMovies[59].id%>">
-                  <img src="<%= dataMovies[59].poster %>" alt="Third Slide" width="180" height="250">
-                </a>
-            </div>
-        </div>
         
         <!-- Carousel controls -->
-        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </a>
-    </div>
-</div>
-
-  
-<div class="container">
-
-</div>
+          <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+          </a>
+          <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+          </a>
+          </div>
+      </div>
 
 </body>
 
