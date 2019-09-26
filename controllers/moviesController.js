@@ -22,25 +22,35 @@ class MovieController {
 
   static findOneWithReviews (req, res) {
     let movie
-    Movie
-    .findByPk(req.params.id, {include: [
-      {
-        model: Review,
-        include: [User]
+    let userId
+    User.
+    findOne({
+      where: {
+        username: req.session.user.name
       }
-    ]})
+    })
+    .then(user => {
+      userId = user.dataValues.id
+      return Movie
+      .findByPk(req.params.id, {include: [
+        {
+          model: Review,
+          include: [User]
+        }
+      ]})
+    })
     .then(foundMovie => {
       movie = foundMovie
       return movie.getAverageRating()
     })
     .then(averageRating => {
-      console.log('ini dia', averageRating)
+      console.log('ini dia', req.session)
       movie.setDataValue('averageRating', averageRating)
       return Review
       .findOne({
         where: {
           MovieId: movie.id,
-          UserId: 1
+          UserId: userId
         }
       })
     })
@@ -65,13 +75,23 @@ class MovieController {
   }
 
   static addReviewPost (req, res) {
-    Review
-    .create({
-      reviewTitle: req.body.reviewTitle,
-      description: req.body.description,
-      rating: req.body.rating,
-      UserId: 1,
-      MovieId: req.params.id
+    let userId
+    User.
+    findOne({
+      where: {
+        username: req.session.user.name
+      }
+    })
+    .then(user => {
+      userId = user.dataValues.id
+      return Review
+      .create({
+        reviewTitle: req.body.reviewTitle,
+        description: req.body.description,
+        rating: req.body.rating,
+        UserId: userId,
+        MovieId: req.params.id
+      })
     })
     .then(created => {
       res.redirect(`/movies/${req.params.id}`)

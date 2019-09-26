@@ -33,14 +33,14 @@ routes.get('/logout', (req, res) =>{
   })
 })
 
-routes.get('/movies/:id', controller.findOneWithReviews)
+routes.get('/movies/:id', cekLogin, controller.findOneWithReviews)
 
-routes.get('/movies/:id/add-review', controller.addReview)
-routes.post('/movies/:id/add-review', controller.addReviewPost)
+routes.get('/movies/:id/add-review', cekLogin, controller.addReview)
+routes.post('/movies/:id/add-review', cekLogin, controller.addReviewPost)
 
-routes.get('/movies/:id/edit-review', controller.editReview)
+routes.get('/movies/:id/edit-review', cekLogin, controller.editReview)
 
-routes.post('/reviews/:id/edit', ReviewController.editPost)
-routes.get('/reviews/:id/delete', ReviewController.delete)
+routes.post('/reviews/:id/edit', cekLogin, ReviewController.editPost)
+routes.get('/reviews/:id/delete', cekLogin, ReviewController.delete)
 
 module.exports = routes
